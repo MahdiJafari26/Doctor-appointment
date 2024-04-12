@@ -48,7 +48,7 @@ public class Appointment {
         isAvailable = available;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     public LocalTime getAppointmentStartTime() {
         return appointmentStartTime;
     }

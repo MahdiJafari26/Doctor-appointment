@@ -7,8 +7,11 @@ import com.blubank.doctorappointment.repositories.WorkDayRepository;
 import com.blubank.doctorappointment.utilities.TimeUtility;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.security.InvalidParameterException;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +26,7 @@ public class DoctorService {
         this.appointmentRepository = appointmentRepository;
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public WorkDay initialNewDay(Date date, LocalTime startTime, LocalTime endTime) {
         if (startTime.isBefore(endTime)) {
             WorkDay workDay = new WorkDay(date, startTime, endTime);
@@ -39,6 +42,19 @@ public class DoctorService {
     public List<Appointment> findAppointmentListByWorkDayDate(Date date) {
         WorkDay workDay = workDayRepository.findWorkDayByDateEquals(date);
         return appointmentRepository.findAllByWorkDay(workDay);
+    }
+
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public Appointment disableAppointment(Date date, LocalTime appointmentTime) {
+        WorkDay workDay = workDayRepository.findWorkDayByDateEquals(date);
+        Appointment appointment = appointmentRepository.findByWorkDayAndAppointmentStartTime(workDay , appointmentTime);
+        if (appointment == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no such an appointment");
+        }else if (!appointment.isTaken()){
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Appointment is taken by a patient");
+        }
+        appointment.setAvailable(false);
+        return appointmentRepository.save(appointment);
     }
 
 }

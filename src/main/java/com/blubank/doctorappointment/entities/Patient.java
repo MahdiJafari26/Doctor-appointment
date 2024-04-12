@@ -7,6 +7,7 @@ import java.util.List;
 public class Patient {
     private int id;
     private String phoneNumber;
+    private String name;
     private List<Appointment> appointmentList;
 
     @Id
@@ -26,6 +27,14 @@ public class Patient {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @OneToMany(cascade = CascadeType.ALL)
