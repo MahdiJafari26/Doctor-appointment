@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Date;
 
 public interface WorkDayRepository extends JpaRepository<WorkDay , Integer> {
-    WorkDay findWorkDayByDateEquals(Date date);
+    WorkDay findWorkDayByDate(Date date);
 }

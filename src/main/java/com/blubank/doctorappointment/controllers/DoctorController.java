@@ -43,7 +43,7 @@ public class DoctorController {
     @PostMapping("/disableAppointment")
     private ResponseEntity<String> disableAppointment(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date, @RequestParam String appointmentTime) {
         try {
-            Appointment appointment = doctorService.disableAppointment(date, LocalTime.parse(appointmentTime));
+            doctorService.disableAppointment(date, LocalTime.parse(appointmentTime));
             return new ResponseEntity<>(date + " at " + appointmentTime + " changed to unavailable", HttpStatus.OK);
         } catch (ResponseStatusException exception) {
             return new ResponseEntity<>(exception.getReason(), exception.getStatus());

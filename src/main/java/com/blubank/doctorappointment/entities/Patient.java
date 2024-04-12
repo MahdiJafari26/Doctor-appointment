@@ -1,6 +1,7 @@
 package com.blubank.doctorappointment.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
@@ -9,6 +10,14 @@ public class Patient {
     private String phoneNumber;
     private String name;
     private List<Appointment> appointmentList;
+
+    public Patient() {
+    }
+
+    public Patient(String phoneNumber, String name) {
+        this.phoneNumber = phoneNumber;
+        this.name = name;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +29,7 @@ public class Patient {
         this.id = id;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     public String getPhoneNumber() {
         return phoneNumber;
     }

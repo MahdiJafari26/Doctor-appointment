@@ -1,6 +1,7 @@
 package com.blubank.doctorappointment.repositories;
 
 import com.blubank.doctorappointment.entities.Appointment;
+import com.blubank.doctorappointment.entities.Patient;
 import com.blubank.doctorappointment.entities.WorkDay;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,4 +12,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     List<Appointment> findAllByWorkDay(WorkDay workDay);
 
     Appointment findByWorkDayAndAppointmentStartTime(WorkDay workDay, LocalTime startTime);
+
+    List<Appointment> findAllByWorkDayAndPatient(WorkDay workDay , Patient patient);
 }

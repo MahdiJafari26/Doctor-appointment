@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.security.InvalidParameterException;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -40,18 +39,20 @@ public class DoctorService {
 
     @Transactional(readOnly = true)
     public List<Appointment> findAppointmentListByWorkDayDate(Date date) {
-        WorkDay workDay = workDayRepository.findWorkDayByDateEquals(date);
+        WorkDay workDay = workDayRepository.findWorkDayByDate(date);
         return appointmentRepository.findAllByWorkDay(workDay);
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public Appointment disableAppointment(Date date, LocalTime appointmentTime) {
-        WorkDay workDay = workDayRepository.findWorkDayByDateEquals(date);
-        Appointment appointment = appointmentRepository.findByWorkDayAndAppointmentStartTime(workDay , appointmentTime);
-        if (appointment == null){
+        WorkDay workDay = workDayRepository.findWorkDayByDate(date);
+        Appointment appointment = appointmentRepository.findByWorkDayAndAppointmentStartTime(workDay, appointmentTime);
+        if (appointment == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no such an appointment");
-        }else if (!appointment.isTaken()){
+        } else if (appointment.isTaken()) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Appointment is taken by a patient");
+        } else if (!appointment.isAvailable()){
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Appointment has already changed to unavailable");
         }
         appointment.setAvailable(false);
         return appointmentRepository.save(appointment);
