@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "2966b33f-cf2a-450a-a52f-d1ceb3b97c9f",
+		"name": "BlueDoctor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/doctor/newday",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "date",
+							"value": "2024-04-13",
+							"type": "text"
+						},
+						{
+							"key": "startTime",
+							"value": "08:10",
+							"type": "text"
+						},
+						{
+							"key": "endTime",
+							"value": "09:50",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/doctor/newDay",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"doctor",
+						"newDay"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/doctor/newday Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "date",
+							"value": "2024-04-13",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/doctor/getAllAppointments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"doctor",
+						"getAllAppointments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/doctor/newday Copy Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "date",
+							"value": "2024-04-13",
+							"type": "text"
+						},
+						{
+							"key": "appointmentTime",
+							"value": "08:10",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/doctor/disableAppointment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"doctor",
+						"disableAppointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/doctor/newday Copy Copy Copy Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "date",
+							"value": "2024-04-13",
+							"type": "text"
+						},
+						{
+							"key": "phoneNumber",
+							"value": "09211234567",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/patient/getAllAppointments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"patient",
+						"getAllAppointments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/doctor/newday Copy Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "date",
+							"value": "2024-04-13",
+							"type": "text"
+						},
+						{
+							"key": "appointmentTime",
+							"value": "08:40",
+							"type": "text"
+						},
+						{
+							"key": "phoneNumber",
+							"value": "0921070",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Mahdi",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/patient/bookAppointment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"patient",
+						"bookAppointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/doctor/newday Copy Copy Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "date",
+							"value": "2024-04-13",
+							"type": "text"
+						},
+						{
+							"key": "appointmentTime",
+							"value": "08:10",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "phoneNumber",
+							"value": "0921070",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Mahdi",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/patient/myAppointmentsList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"patient",
+						"myAppointmentsList"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
