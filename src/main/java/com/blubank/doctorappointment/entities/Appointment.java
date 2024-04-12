@@ -1,5 +1,7 @@
 package com.blubank.doctorappointment.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalTime;
 
@@ -12,6 +14,14 @@ public class Appointment {
     private WorkDay workDay;
     private Patient patient;
 
+    public Appointment() {
+    }
+
+    public Appointment(LocalTime appointmentStartTime, WorkDay workDay) {
+        this.appointmentStartTime = appointmentStartTime;
+        this.workDay = workDay;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId() {
@@ -22,7 +32,6 @@ public class Appointment {
         this.id = id;
     }
 
-    @Transient
     public boolean isTaken() {
         return isTaken;
     }
@@ -31,7 +40,6 @@ public class Appointment {
         isTaken = taken;
     }
 
-    @Transient
     public boolean isAvailable() {
         return isAvailable;
     }
@@ -49,7 +57,8 @@ public class Appointment {
         this.appointmentStartTime = appointmentStartTime;
     }
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     public WorkDay getWorkDay() {
         return workDay;
     }
@@ -58,7 +67,7 @@ public class Appointment {
         this.workDay = workDay;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     public Patient getPatient() {
         return patient;
     }

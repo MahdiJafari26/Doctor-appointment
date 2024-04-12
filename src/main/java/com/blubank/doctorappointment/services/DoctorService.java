@@ -1,22 +1,44 @@
 package com.blubank.doctorappointment.services;
 
+import com.blubank.doctorappointment.entities.Appointment;
 import com.blubank.doctorappointment.entities.WorkDay;
+import com.blubank.doctorappointment.repositories.AppointmentRepository;
+import com.blubank.doctorappointment.repositories.WorkDayRepository;
+import com.blubank.doctorappointment.utilities.TimeUtility;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class DoctorService {
+    final AppointmentRepository appointmentRepository;
+    final WorkDayRepository workDayRepository;
+
+    public DoctorService(WorkDayRepository workDayRepository, AppointmentRepository appointmentRepository) {
+        this.workDayRepository = workDayRepository;
+        this.appointmentRepository = appointmentRepository;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
     public WorkDay initialNewDay(Date date, LocalTime startTime, LocalTime endTime) {
         if (startTime.isBefore(endTime)) {
-            return new WorkDay(date, startTime, endTime);
+            WorkDay workDay = new WorkDay(date, startTime, endTime);
+            workDay.setAppointmentList(TimeUtility.breakDownWorkDay(startTime, endTime, workDay));
+            workDayRepository.save(workDay);
+            return workDay;
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "endDate should be after startDate");
         }
+    }
 
+    @Transactional(readOnly = true)
+    public List<Appointment> findAppointmentListByWorkDayDate(Date date) {
+        WorkDay workDay = workDayRepository.findWorkDayByDateEquals(date);
+        return appointmentRepository.findAllByWorkDay(workDay);
     }
 
 }

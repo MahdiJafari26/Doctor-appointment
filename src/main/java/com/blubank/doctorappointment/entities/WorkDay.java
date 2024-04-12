@@ -3,7 +3,7 @@ package com.blubank.doctorappointment.entities;
 import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Date;
-import java.util.Vector;
+import java.util.List;
 
 @Entity
 public class WorkDay {
@@ -11,7 +11,7 @@ public class WorkDay {
     private Date date;
     private LocalTime startTime;
     private LocalTime endTime;
-    private Vector<Appointment> takenAppointmentVector;
+    private List<Appointment> appointmentList;
 
     public WorkDay() {
         this(new Date(), LocalTime.now(), LocalTime.now().plusHours(8));
@@ -33,6 +33,8 @@ public class WorkDay {
         this.id = id;
     }
 
+    @Column(unique = true)
+    @Temporal(TemporalType.DATE)
     public Date getDate() {
         return date;
     }
@@ -57,12 +59,12 @@ public class WorkDay {
         this.endTime = endTime;
     }
 
-    @OneToMany
-    public Vector<Appointment> getTakenAppointmentVector() {
-        return takenAppointmentVector;
+    @OneToMany(cascade = CascadeType.ALL)
+    public List<Appointment> getAppointmentList() {
+        return appointmentList;
     }
 
-    public void setTakenAppointmentVector(Vector<Appointment> takenAppointmentList) {
-        this.takenAppointmentVector = takenAppointmentList;
+    public void setAppointmentList(List<Appointment> takenAppointmentList) {
+        this.appointmentList = takenAppointmentList;
     }
 }
