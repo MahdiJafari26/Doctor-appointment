@@ -1,13 +1,13 @@
 package com.blubank.doctorappointment.entities;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Vector;
 
 @Entity
 public class Patient {
     private int id;
     private String phoneNumber;
-    private List<Appointment> appointmentList;
+    private Vector<Appointment> appointmentVector;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,11 +29,11 @@ public class Patient {
     }
 
     @OneToMany
-    public List<Appointment> getAppointmentList() {
-        return appointmentList;
+    public Vector<Appointment> getAppointmentVector() {
+        return appointmentVector;
     }
 
-    public void setAppointmentList(List<Appointment> appointmentList) {
-        this.appointmentList = appointmentList;
+    public void setAppointmentVector(Vector<Appointment> appointmentList) {
+        this.appointmentVector = appointmentList;
     }
 }

@@ -1,14 +1,27 @@
 package com.blubank.doctorappointment.entities;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.Date;
-import java.util.List;
+import java.util.Vector;
 
 @Entity
 public class WorkDay {
     private int id;
     private Date date;
-    private List<Appointment> takenAppointmentList;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private Vector<Appointment> takenAppointmentVector;
+
+    public WorkDay() {
+        this(new Date(), LocalTime.now(), LocalTime.now().plusHours(8));
+    }
+
+    public WorkDay(Date date, LocalTime startTime, LocalTime endTime) {
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,12 +41,28 @@ public class WorkDay {
         this.date = date;
     }
 
-    @OneToMany
-    public List<Appointment> getTakenAppointmentList() {
-        return takenAppointmentList;
+    public LocalTime getStartTime() {
+        return startTime;
     }
 
-    public void setTakenAppointmentList(List<Appointment> takenAppointmentList) {
-        this.takenAppointmentList = takenAppointmentList;
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+    @OneToMany
+    public Vector<Appointment> getTakenAppointmentVector() {
+        return takenAppointmentVector;
+    }
+
+    public void setTakenAppointmentVector(Vector<Appointment> takenAppointmentList) {
+        this.takenAppointmentVector = takenAppointmentList;
     }
 }
